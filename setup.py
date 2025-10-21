@@ -4,7 +4,7 @@ setup(
     name="cryptofuck",
     version="1.0.0",
     description="Ultimate encoding/decoding CLI tool",
-    author="BrunoMars",
+    author="Haxor",
     py_modules=["cryptofuck"],
     entry_points={
         "console_scripts": [
