@@ -77,85 +77,72 @@ def reverse_text(text):
     return text[::-1]
 
 def main():
-    parser = argparse.ArgumentParser(description='Cryptofuck - Ultimate encoding/decoding tool')
-    parser.add_argument('input', nargs='?', help='Input text to convert')
-    parser.add_argument('-t', '--to', choices=['bin', 'hex', 'b64', 'url', 'rot13', 'ascii', 'octal', 'md5', 'sha1', 'sha256', 'sha512', 'caesar', 'reverse'], help='Convert to format')
-    parser.add_argument('-f', '--from', dest='from_format', choices=['bin', 'hex', 'b64', 'url', 'rot13', 'ascii', 'octal'], help='Convert from format')
-    parser.add_argument('-s', '--shift', type=int, default=13, help='Caesar cipher shift (default: 13)')
-    parser.add_argument('-l', '--list', action='store_true', help='List all available formats')
-    
-    args = parser.parse_args()
-    
-    if args.list:
-        print("Available formats:")
-        print("  bin     - Binary")
-        print("  hex     - Hexadecimal")
-        print("  b64     - Base64")
-        print("  url     - URL encoding")
-        print("  rot13   - ROT13")
-        print("  ascii   - ASCII values")
-        print("  octal   - Octal")
-        print("  md5     - MD5 hash")
-        print("  sha1    - SHA1 hash")
-        print("  sha256  - SHA256 hash")
-        print("  sha512  - SHA512 hash")
-        print("  caesar  - Caesar cipher")
-        print("  reverse - Reverse text")
+    if len(sys.argv) < 4:
+        print("Usage: cryptofuck <input> -<from_format> -<to_format>")
+        print("Formats: text, bin, hex, b64, url, rot13, ascii, octal, md5, sha1, sha256, sha512, caesar, reverse")
+        print("Examples:")
+        print("  cryptofuck nalamo -text -bin")
+        print("  cryptofuck 01101110 -bin -text")
+        print("  cryptofuck hello -text -hex")
         return
     
-    if not args.input:
-        parser.print_help()
-        return
+    input_text = sys.argv[1]
+    from_format = sys.argv[2].lstrip('-')
+    to_format = sys.argv[3].lstrip('-')
     
-    input_text = args.input
-    
-    if args.from_format:
-        if args.from_format == 'bin':
-            input_text = binary_to_text(input_text)
-        elif args.from_format == 'hex':
-            input_text = hex_to_text(input_text)
-        elif args.from_format == 'b64':
-            input_text = base64_to_text(input_text)
-        elif args.from_format == 'url':
-            input_text = url_to_text(input_text)
-        elif args.from_format == 'rot13':
-            input_text = rot13_to_text(input_text)
-        elif args.from_format == 'ascii':
-            input_text = ascii_to_text(input_text)
-        elif args.from_format == 'octal':
-            input_text = octal_to_text(input_text)
-    
-    if args.to:
-        if args.to == 'bin':
-            result = text_to_binary(input_text)
-        elif args.to == 'hex':
-            result = text_to_hex(input_text)
-        elif args.to == 'b64':
-            result = text_to_base64(input_text)
-        elif args.to == 'url':
-            result = text_to_url(input_text)
-        elif args.to == 'rot13':
-            result = text_to_rot13(input_text)
-        elif args.to == 'ascii':
-            result = text_to_ascii(input_text)
-        elif args.to == 'octal':
-            result = text_to_octal(input_text)
-        elif args.to == 'md5':
-            result = hash_md5(input_text)
-        elif args.to == 'sha1':
-            result = hash_sha1(input_text)
-        elif args.to == 'sha256':
-            result = hash_sha256(input_text)
-        elif args.to == 'sha512':
-            result = hash_sha512(input_text)
-        elif args.to == 'caesar':
-            result = caesar_cipher(input_text, args.shift)
-        elif args.to == 'reverse':
-            result = reverse_text(input_text)
-        
-        print(result)
+    if from_format == 'text':
+        processed_text = input_text
+    elif from_format == 'bin':
+        processed_text = binary_to_text(input_text)
+    elif from_format == 'hex':
+        processed_text = hex_to_text(input_text)
+    elif from_format == 'b64':
+        processed_text = base64_to_text(input_text)
+    elif from_format == 'url':
+        processed_text = url_to_text(input_text)
+    elif from_format == 'rot13':
+        processed_text = rot13_to_text(input_text)
+    elif from_format == 'ascii':
+        processed_text = ascii_to_text(input_text)
+    elif from_format == 'octal':
+        processed_text = octal_to_text(input_text)
     else:
-        print("Error: Specify output format with -t/--to")
+        print(f"Unknown from format: {from_format}")
+        return
+    
+    if to_format == 'text':
+        result = processed_text
+    elif to_format == 'bin':
+        result = text_to_binary(processed_text)
+    elif to_format == 'hex':
+        result = text_to_hex(processed_text)
+    elif to_format == 'b64':
+        result = text_to_base64(processed_text)
+    elif to_format == 'url':
+        result = text_to_url(processed_text)
+    elif to_format == 'rot13':
+        result = text_to_rot13(processed_text)
+    elif to_format == 'ascii':
+        result = text_to_ascii(processed_text)
+    elif to_format == 'octal':
+        result = text_to_octal(processed_text)
+    elif to_format == 'md5':
+        result = hash_md5(processed_text)
+    elif to_format == 'sha1':
+        result = hash_sha1(processed_text)
+    elif to_format == 'sha256':
+        result = hash_sha256(processed_text)
+    elif to_format == 'sha512':
+        result = hash_sha512(processed_text)
+    elif to_format == 'caesar':
+        result = caesar_cipher(processed_text, 13)
+    elif to_format == 'reverse':
+        result = reverse_text(processed_text)
+    else:
+        print(f"Unknown to format: {to_format}")
+        return
+    
+    print(result)
 
 if __name__ == "__main__":
     main()
