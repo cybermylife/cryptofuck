@@ -3,8 +3,8 @@ from setuptools import setup, find_packages
 setup(
     name="cryptofuck",
     version="1.0.0",
-    description="convertisseur , encodeur , decodeur",
-    author="Brunomars",
+    description="Ultimate encoding/decoding CLI tool",
+    author="Haxor",
     py_modules=["cryptofuck"],
     entry_points={
         "console_scripts": [
