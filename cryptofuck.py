@@ -377,7 +377,18 @@ def main():
     
     input_text = sys.argv[1]
     from_format = sys.argv[2].lstrip('-')
-    to_format = sys.argv[3].lstrip('-')
+    
+    # Trouve le format de sortie (peut être après des paramètres)
+    to_format = None
+    for i in range(3, len(sys.argv)):
+        if sys.argv[i].startswith('-') and not sys.argv[i].startswith('--') and sys.argv[i] != '-shift' and sys.argv[i] != '-key' and sys.argv[i] != '-rails':
+            to_format = sys.argv[i].lstrip('-')
+            break
+    
+    if not to_format:
+        print("Error: Missing output format!")
+        print("Usage: cryptofuck <input> -<from_format> -<to_format>")
+        return
     
     try:
         if from_format == 'text':
